@@ -10,29 +10,22 @@ object Application extends Controller {
     Ok(views.html.index("Your new application is ready."))
   }
   
-  
-  def signup = Action { implicit request =>
+  def signup = Action { implicit request =>  
     val cluster: Cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
     val session = cluster.connect("demo");
+
+    val querystring = request.queryString.map { case (k,v) => 
+      k -> v.mkString 
+    }
     
-    val querystring: Map[String, Seq[String]] = request.queryString;
+    val lastname = querystring.apply("lastname")
+    val firstname = querystring.apply("firstname")
+    val email = querystring.apply("email")
     
-    val lastname = querystring.get("lastname").mkString
-    
-    println(lastname)
-    
-    
-    
-        val statement= session.prepare("INSERT INTO users" + "(lastname, age, city, email, firstname)" + "VALUES (?,?,?,?,?);");
- 
-        val boundStatement = new BoundStatement(statement);
-        
-        val age: Int = 35
-        session.execute(boundStatement.bind(lastname, 35, "Austin", "bob@example.com", "Bob"));
-    
-    
-    
-    session.execute("INSERT INTO users (lastname, age, city, email, firstname) VALUES ('Jones', 35, 'Austin', 'bob@example.com', 'Bob')");
+    val statement= session.prepare("INSERT INTO users" + "(lastname, firstname, email)" + "VALUES (?,?,?);");
+    val boundStatement = new BoundStatement(statement);
+    session.execute(boundStatement.bind(lastname, firstname, email));
+
     Ok("we just signed up a user")
   }
     
