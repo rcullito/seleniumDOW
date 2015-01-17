@@ -6,8 +6,7 @@
 GET     /                           controllers.Application.index
 
 GET     /signup                     controllers.Application.signup
-
-
+GET 	/incoming					controllers.Incoming.index
 GET 	/hack						controllers.Application.hack
 
 # Map static resources from the /public folder to the /assets URL path

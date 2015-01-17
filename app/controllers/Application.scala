@@ -22,13 +22,12 @@ object Application extends Controller {
     val firstname = querystring.apply("firstname")
     val email = querystring.apply("email")
     
-    val statement= session.prepare("INSERT INTO users" + "(lastname, firstname, email)" + "VALUES (?,?,?);");
+    val statement= session.prepare("INSERT INTO accounts" + "(lastname, firstname, email)" + "VALUES (?,?,?);");
     val boundStatement = new BoundStatement(statement);
     session.execute(boundStatement.bind(lastname, firstname, email));
 
     Ok("we just signed up a user")
   }
-    
     
  def hack = Action {
    implicit request =>
