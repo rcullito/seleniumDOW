@@ -1,6 +1,16 @@
 package models
 import com.datastax.driver.core._
-case class User(name: String, email: String)
+case class User(
+    prefix: String,
+    firstname: String,
+    lastname: String,
+    email: String,
+    address1: String,
+    address2: String,
+    city: String,
+    state: String,
+    zip: String
+)
 
 object User {
   
@@ -9,15 +19,10 @@ object User {
     val cluster: Cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
     val session = cluster.connect("demo");
 
-    val lastname = user.name;
-    val email = user.email;
     
-    println(lastname)
-    println(email)
-    
-    val statement= session.prepare("INSERT INTO accounts" + "(lastname, email)" + "VALUES (?,?);");
+    val statement= session.prepare("INSERT INTO accounts" + "(prefix, firstname, lastname, email, address1, address2, city, state, zip)" + "VALUES (?,?,?,?,?,?,?,?,?);");
     val boundStatement = new BoundStatement(statement);
-    session.execute(boundStatement.bind(lastname, email));
+    session.execute(boundStatement.bind(user.prefix, user.firstname, user.lastname, user.email, user.address1, user.address2, user.city, user.state, user.zip));
     
     println("Hello, world!")
     

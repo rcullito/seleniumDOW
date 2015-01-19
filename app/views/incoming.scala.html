@@ -10,8 +10,15 @@
     <body>
     
     @helper.form(action = routes.Incoming.submitForm) {
-	  @helper.inputText(userForm("name"))
+	  @helper.inputText(userForm("prefix"))
+	  @helper.inputText(userForm("firstname"))
+	  @helper.inputText(userForm("lastname"))
 	  @helper.inputText(userForm("email"))
+	  @helper.inputText(userForm("address1"))
+	  @helper.inputText(userForm("address2"))
+	  @helper.inputText(userForm("city"))
+	  @helper.inputText(userForm("state"))
+	  @helper.inputText(userForm("zip"))  	  	  	  	  	    
 	  <button class="btn btn-primary btn-block">Submit</button>
 	}
     
