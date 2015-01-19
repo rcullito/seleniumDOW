@@ -8,20 +8,6 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/foundation.css")">
     </head>
     <body>
-    
-    @helper.form(action = routes.Incoming.submitForm) {
-	  @helper.inputText(userForm("prefix"))
-	  @helper.inputText(userForm("firstname"))
-	  @helper.inputText(userForm("lastname"))
-	  @helper.inputText(userForm("email"))
-	  @helper.inputText(userForm("address1"))
-	  @helper.inputText(userForm("address2"))
-	  @helper.inputText(userForm("city"))
-	  @helper.inputText(userForm("state"))
-	  @helper.inputText(userForm("zip"))  	  	  	  	  	    
-	  <button class="btn btn-primary btn-block">Submit</button>
-	}
-    
 	    <div class="row">
 	      <div style="text-align:center;" class="large-12 columns">
 			<h3>Support the causes you believe in without feeling trapped by them.</h3>
@@ -31,31 +17,23 @@
 	    </div>
 	    <div class="row">
 	      <div class="large-12 columns">
-			<form>
+			@helper.form(action = routes.Incoming.submitForm) {
 		        <div class="row">
 			        <div class="large-6 medium-6 columns">
-		                <label>Prefix</label>
-		        		<input type="text" placeholder="Prefix"/>
-		         		<label>First Name</label>
-		         		<input type="text" placeholder="First Name"/>    		
-				        <label>Last Name</label>
-				        <input type="text" placeholder="Last Name"/>	 
-				        <label>Email</label>
-		         		<input type="text" placeholder="Email">    
+						  @helper.inputText(userForm("prefix"))
+						  @helper.inputText(userForm("firstname"))
+						  @helper.inputText(userForm("lastname"))
+						  @helper.inputText(userForm("email"))   
 			    	</div>
 		        	<div class="large-6 medium-6 columns">
-		        		<label>Home Address</label>
-		  				<input type="text"  placeholder="Street Address"/>
-		        		<label>City</label>
-		         		<input type="text" placeholder="City"/>
-		         		<label>State</label>
-		         		<input type="text"   placeholder="State"/>
-		         		<label>Zip</label>
-		         		<input type="text" placeholder="000000"/> 
+						  @helper.inputText(userForm("address1"))
+						  @helper.inputText(userForm("city"))
+						  @helper.inputText(userForm("state"))
+						  @helper.inputText(userForm("zip")) 
 		        	</div>      
 				</div>
-				<button class="btn btn-primary btn-block">Submit</button>		
-			</form>
+				<button class="btn btn-primary btn-block">Submit</button>
+			}		
 	      </div>
 	    </div> 
     </body>

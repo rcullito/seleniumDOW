@@ -6,7 +6,6 @@ case class User(
     lastname: String,
     email: String,
     address1: String,
-    address2: String,
     city: String,
     state: String,
     zip: String
@@ -20,9 +19,9 @@ object User {
     val session = cluster.connect("demo");
 
     
-    val statement= session.prepare("INSERT INTO accounts" + "(prefix, firstname, lastname, email, address1, address2, city, state, zip)" + "VALUES (?,?,?,?,?,?,?,?,?);");
+    val statement= session.prepare("INSERT INTO accounts" + "(prefix, firstname, lastname, email, address1, city, state, zip)" + "VALUES (?,?,?,?,?,?,?,?);");
     val boundStatement = new BoundStatement(statement);
-    session.execute(boundStatement.bind(user.prefix, user.firstname, user.lastname, user.email, user.address1, user.address2, user.city, user.state, user.zip));
+    session.execute(boundStatement.bind(user.prefix, user.firstname, user.lastname, user.email, user.address1, user.city, user.state, user.zip));
     
     println("Hello, world!")
     

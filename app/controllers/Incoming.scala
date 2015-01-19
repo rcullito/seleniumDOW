@@ -15,15 +15,14 @@ object Incoming extends Controller {
   
   val userForm = Form(
     mapping(
-      "prefix" -> nonEmptyText,
-      "firstname" -> nonEmptyText,
-      "lastname" -> nonEmptyText,
-      "email" -> email,
-      "address1" -> nonEmptyText,
-      "address2" -> text,
-      "city" -> nonEmptyText,
-      "state" -> nonEmptyText,
-      "zip" -> nonEmptyText
+      "prefix" -> text,
+      "firstname" -> text,
+      "lastname" -> text,
+      "email" -> text,
+      "address1" -> text,
+      "city" -> text,
+      "state" -> text,
+      "zip" -> text
     )(models.User.apply)(models.User.unapply)
   )
   
@@ -40,7 +39,7 @@ object Incoming extends Controller {
         },
         userData => {
           /* binding success, you get the actual value. */
-          val newUser = models.User(userData.prefix,  userData.firstname,  userData.lastname,  userData.email,  userData.address1,  userData.address2,  userData.city,  userData.state,  userData.zip)
+          val newUser = models.User(userData.prefix,  userData.firstname,  userData.lastname,  userData.email,  userData.address1, userData.city,  userData.state,  userData.zip)
           models.User.create(newUser)
           Redirect(routes.Application.index())
         }
