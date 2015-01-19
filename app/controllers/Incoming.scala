@@ -24,20 +24,20 @@ object Incoming extends Controller {
   def submitForm = Action {
       implicit request =>
 
+      Logger.info("here man")  
+        
       userForm.bindFromRequest.fold(
         formWithErrors => {
+          println("this is not good")
           BadRequest(views.html.incoming(formWithErrors))
         },
         userData => {
           /* binding success, you get the actual value. */
           val newUser = models.User(userData.name, userData.email)
-          val id = models.User.create(newUser)
+          models.User.create(newUser)
           Redirect(routes.Application.index())
         }
-      )        
-        
-        
-      Ok("whoo")
+      )         
   }
 
   

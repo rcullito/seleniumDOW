@@ -8,6 +8,13 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/foundation.css")">
     </head>
     <body>
+    
+    @helper.form(action = routes.Incoming.submitForm) {
+	  @helper.inputText(userForm("name"))
+	  @helper.inputText(userForm("email"))
+	  <button class="btn btn-primary btn-block">Submit</button>
+	}
+    
 	    <div class="row">
 	      <div style="text-align:center;" class="large-12 columns">
 			<h3>Support the causes you believe in without feeling trapped by them.</h3>
