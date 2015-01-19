@@ -10,7 +10,7 @@ import play.api.data.Forms._
 import models.User
 
 
-object Incoming extends Controller {
+object Users extends Controller {
 
   
   val userForm = Form(
@@ -29,13 +29,9 @@ object Incoming extends Controller {
   
   def submitForm = Action {
       implicit request =>
-
-      Logger.info("here man")  
-        
       userForm.bindFromRequest.fold(
         formWithErrors => {
-          println("this is not good")
-          BadRequest(views.html.incoming(formWithErrors))
+          BadRequest(views.html.users(formWithErrors))
         },
         userData => {
           /* binding success, you get the actual value. */
@@ -48,7 +44,7 @@ object Incoming extends Controller {
 
   
   def index = Action {
-     Ok(views.html.incoming(userForm)) 
+     Ok(views.html.users(userForm)) 
   }
 
 }
