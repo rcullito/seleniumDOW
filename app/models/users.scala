@@ -26,11 +26,15 @@ object User {
   
   def fetchEmails(): String = {
     val results: ResultSet = session.execute("SELECT * FROM accounts")
-    
     val emails = results.map { x => x.getString("email") }
-    
-    emails.toString()
-    
+    emails.toString()  
+  }
+  
+  
+  def fetchByEmail(email: String): String = {
+    val queryString = "SELECT * FROM accounts WHERE email='" + email + "'"
+    val result: ResultSet = session.execute(queryString)
+    result.one().toString()
   }
   
 }
