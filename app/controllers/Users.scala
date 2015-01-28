@@ -54,7 +54,7 @@ object Users extends Controller {
   
     def fetchByEmail(email: String) = Action {
      val account = models.User.fetchByEmail(email)
-     Ok(account);
+     Ok(account.toString());
   }
   
 

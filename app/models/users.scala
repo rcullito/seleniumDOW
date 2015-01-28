@@ -31,10 +31,10 @@ object User {
   }
   
   
-  def fetchByEmail(email: String): String = {
+  def fetchByEmail(email: String): Row = {
     val queryString = "SELECT * FROM accounts WHERE email='" + email + "'"
     val result: ResultSet = session.execute(queryString)
-    result.one().toString()
+    result.one()
   }
   
 }
