@@ -52,7 +52,7 @@ object Users extends Controller {
      Ok(accounts);
   }
   
-    def fetchByEmail(email: String) = Action {
+  def fetchByEmail(email: String) = Action {
      val account = models.User.fetchByEmail(email)
      Ok(account.toString());
   }
