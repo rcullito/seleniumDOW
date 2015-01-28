@@ -6,9 +6,9 @@
 GET     /                           controllers.Application.index
 
 GET 	/welcome					controllers.Users.index
-POST 	/users					controllers.Users.submitForm
+POST 	/users						controllers.Users.submitForm
 
-POST /user	controllers.Users.getUser
+GET 	/emails						controllers.Users.fetchEmails
 
 
 # Map static resources from the /public folder to the /assets URL path

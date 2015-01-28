@@ -47,8 +47,9 @@ object Users extends Controller {
      Ok(views.html.users(userForm)) 
   }
   
-  def getUser = Action {
-     Ok("route working") 
+  def fetchEmails = Action {
+     val accounts = models.User.fetchEmails()
+     Ok(accounts);
   }
   
 
