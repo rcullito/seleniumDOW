@@ -4,7 +4,7 @@ import play.api._
 import play.api.mvc._
 
 import models.User
-import models.Charge
+//import models.Charge
 
 object Application extends Controller {
 
@@ -28,7 +28,7 @@ object Application extends Controller {
 
     // we have all the strings we need now
     // send these as arguments to a model though
-    models.Charge.launch(url, prefix, firstname, lastname, email, address1, city, state, zip)
+    //models.Charge.launch(url, prefix, firstname, lastname, email, address1, city, state, zip)
   
     Ok("clear")
   
