@@ -46,5 +46,10 @@ object Users extends Controller {
   def index = Action {
      Ok(views.html.users(userForm)) 
   }
+  
+  def getUser = Action {
+     Ok("route working") 
+  }
+  
 
 }
