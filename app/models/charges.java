@@ -11,7 +11,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 
 
-public class charges {
+public class Charges {
   private WebDriver driver;
   private boolean acceptNextAlert = true;
   private StringBuffer verificationErrors = new StringBuffer();
@@ -24,33 +24,9 @@ public class charges {
   }
 
   @Test
-  public void testScript() throws Exception {
+  public void launch() throws Exception {
+	  System.out.println("whoo");
 
-//    driver.get(currentWriter.getUrl());
-//    
-//    helpers.delay(2000);
-//    
-//    new Select(driver.findElement(By.id("title"))).selectByVisibleText(currentWriter.getPrefix());
-//    driver.findElement(By.id("fname")).clear();
-//    driver.findElement(By.id("fname")).sendKeys(currentWriter.getFirstName());    
-//    driver.findElement(By.id("lname")).clear();
-//    driver.findElement(By.id("lname")).sendKeys(currentWriter.getLastName());
-//    driver.findElement(By.id("street1")).clear();
-//    driver.findElement(By.id("email")).sendKeys(currentWriter.getEmail());
-//    driver.findElement(By.id("street1")).clear();
-//    driver.findElement(By.id("street1")).sendKeys(currentWriter.getAddress1());
-//    driver.findElement(By.id("city")).clear();
-//    helpers.delay(8000);
-//    driver.findElement(By.id("city")).sendKeys(currentWriter.getCity());
-//    new Select(driver.findElement(By.id("state"))).selectByVisibleText(currentWriter.getState());    
-//    driver.findElement(By.id("zip")).clear();
-//    driver.findElement(By.id("zip")).sendKeys(currentWriter.getZip()); 
-//    // need to find a better way around this option
-//    helpers.delay(2000);
-//    new Select(driver.findElement(By.id("1428_34940_5_42561"))).selectByVisibleText(currentWriter.getReceiveMoreInfo());
-//    helpers.delay(8000);
-//    driver.findElement(By.id("send")).click(); 
-//    helpers.delay(2000);
   }
 
   
