@@ -61,7 +61,7 @@ object Users extends Controller {
     // send these as arguments to a model though
     //models.Charge.launch(url, prefix, firstname, lastname, email, address1, city, state, zip)
     // we need to call teh charge file
-    charge.launch()
+    charge.launch(url, prefix, firstname, lastname, email, address1, city, state, zip)
     
     
     Ok("clear")
