@@ -1,1 +1,4 @@
-2. implement selenium code given an email and a url
+TODO
+
+1. how to run selenium outside of a testing environment
+2. how to run selenium with phantomjs?
