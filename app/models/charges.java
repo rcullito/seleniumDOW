@@ -17,15 +17,14 @@ public class Charges {
   private boolean acceptNextAlert = true;
   private StringBuffer verificationErrors = new StringBuffer();
   
-    
-  @Before
-  public void setUp() throws Exception {
-    driver = new FirefoxDriver();
-    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-  }
-
   @Test
   public void launch(String url, String prefix, String firstname, String lastname, String email, String address1, String city, String state, String zip) throws Exception {
+	  	System.out.println("the url is");
+	  	System.out.println(url);
+	  	
+	    driver = new FirefoxDriver();
+	    //driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	  	
 	    driver.get(url);
 
 	    
@@ -47,47 +46,7 @@ public class Charges {
 	    new Select(driver.findElement(By.id("1428_34940_5_42561"))).selectByVisibleText("No");
 	    driver.findElement(By.id("send")).click(); 
   }
-
   
-  @After
-  public void tearDown() throws Exception {
-    driver.quit();
-    String verificationErrorString = verificationErrors.toString();
-    if (!"".equals(verificationErrorString)) {
-      fail(verificationErrorString);
-    }
-  }
-
-  private boolean isElementPresent(By by) {
-    try {
-      driver.findElement(by);
-      return true;
-    } catch (NoSuchElementException e) {
-      return false;
-    }
-  }
-
-  private boolean isAlertPresent() {
-    try {
-      driver.switchTo().alert();
-      return true;
-    } catch (NoAlertPresentException e) {
-      return false;
-    }
-  }
-
-  private String closeAlertAndGetItsText() {
-    try {
-      Alert alert = driver.switchTo().alert();
-      String alertText = alert.getText();
-      if (acceptNextAlert) {
-        alert.accept();
-      } else {
-        alert.dismiss();
-      }
-      return alertText;
-    } finally {
-      acceptNextAlert = true;
-    }
-  }
+  
+  
 }

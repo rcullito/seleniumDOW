@@ -43,9 +43,10 @@ object Users extends Controller {
       )         
   }
   
-  def showtime(emailInput: String, url: String) = Action {
+  def showtime(emailInput: String) = Action {
     val account = models.User.fetchByEmail(emailInput)
 
+    val url = "https://secure.defenders.org/site/Advocacy?cmd=display&page=UserAction&id=2839"
 
     val prefix: String = account.getString("prefix")    
     val firstname: String = account.getString("firstname")

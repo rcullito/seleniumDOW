@@ -11,7 +11,7 @@ POST 	/users						controllers.Users.submitForm
 GET 	/emails						controllers.Users.fetchEmails
 GET		/user/:email				controllers.Users.fetchByEmail(email: String)
 
-GET     /showtime/:email/:url       controllers.Users.showtime(email: String, url: String)
+GET     /showtime/:email      controllers.Users.showtime(email: String)
 
 
 # Map static resources from the /public folder to the /assets URL path
