@@ -29,32 +29,35 @@ public class Charges {
       WebDriver driver = new FirefoxDriver();
 
       // And now use this to visit Google
-      driver.get("http://www.google.com");
+      driver.get(url);
+      
+      Thread.sleep(2000);
       // Alternatively the same thing can be done like this
       // driver.navigate().to("http://www.google.com");
-
-      // Find the text input element by its name
-      WebElement element = driver.findElement(By.name("q"));
-
-      // Enter something to search for
-      element.sendKeys("Cheese!");
-
-      // Now submit the form. WebDriver will find the form for us from the element
-      element.submit();
-
-      // Check the title of the page
-      System.out.println("Page title is: " + driver.getTitle());
       
-      // Google's search is rendered dynamically with JavaScript.
-      // Wait for the page to load, timeout after 10 seconds
-      (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
-          public Boolean apply(WebDriver d) {
-              return d.getTitle().toLowerCase().startsWith("cheese!");
-          }
-      });
+      new Select(driver.findElement(By.id("title"))).selectByVisibleText(prefix);
+      driver.findElement(By.id("fname")).clear();
+      driver.findElement(By.id("fname")).sendKeys(firstname);    
+      driver.findElement(By.id("lname")).clear();
+      driver.findElement(By.id("lname")).sendKeys(lastname);
+      driver.findElement(By.id("street1")).clear();
+      driver.findElement(By.id("email")).sendKeys(email);
+      
+      Thread.sleep(2000);
+      driver.findElement(By.id("street1")).clear();
+      driver.findElement(By.id("street1")).sendKeys(address1);
+      driver.findElement(By.id("city")).clear();
+      driver.findElement(By.id("city")).sendKeys(city);
+      new Select(driver.findElement(By.id("state"))).selectByVisibleText(state);    
+      driver.findElement(By.id("zip")).clear();
+      driver.findElement(By.id("zip")).sendKeys(zip); 
+      // need to find a better way around this option
+      new Select(driver.findElement(By.id("1428_35400_5_42964"))).selectByVisibleText("No");
+      
+      Thread.sleep(2000);
+      driver.findElement(By.id("send")).click(); 
 
-      // Should see: "cheese! - Google Search"
-      System.out.println("Page title is: " + driver.getTitle());
+      Thread.sleep(4000);
       
       //Close the browser
       driver.quit();	

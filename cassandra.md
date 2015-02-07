@@ -22,3 +22,8 @@ city text,
 state text,
 zip text,
 PRIMARY KEY (email));
+
+
+SELECT * FROM accounts;
+UPDATE accounts SET state = 'WA' WHERE email = 'rob.culliton@gmail.com';
+DELETE FROM accounts WHERE email = 'rob.culliton@gmail.com';
