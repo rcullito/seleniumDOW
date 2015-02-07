@@ -1,4 +1,5 @@
 @(userForm: Form[models.User])
+@import views.html.helper._
 <!DOCTYPE html>
 
 <html>
@@ -28,7 +29,7 @@
 		        	<div class="large-6 medium-6 columns">
 						  @helper.inputText(userForm("address1"))
 						  @helper.inputText(userForm("city"))
-						  @helper.inputText(userForm("state"))
+						  @helper.select(field = userForm("state"), options = options(List("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY")))
 						  @helper.inputText(userForm("zip")) 
 		        	</div>      
 				</div>
