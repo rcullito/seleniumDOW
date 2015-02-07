@@ -57,7 +57,7 @@ public class Charges {
       Thread.sleep(2000);
       driver.findElement(By.id("send")).click(); 
 
-      Thread.sleep(4000);
+      Thread.sleep(5000);
       
       //Close the browser
       driver.quit();	
