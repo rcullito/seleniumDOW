@@ -43,30 +43,38 @@ object Users extends Controller {
       )         
   }
   
-  def showtime(emailInput: String) = Action {
-    val account = models.User.fetchByEmail(emailInput)
-
-//    val url = "https://secure.defenders.org/site/Advocacy?cmd=display&page=UserAction&id=2833"
-    val url = "https://secure.defenders.org/site/Advocacy?cmd=display&page=UserAction&id=2839"
-
-    val prefix: String = account.getString("prefix")    
-    val firstname: String = account.getString("firstname")
-    val lastname: String = account.getString("lastname")    
-    val email: String = account.getString("email")
-    val address1: String = account.getString("address1")
-    val city: String = account.getString("city")
-    val state: String = account.getString("state")
-    val zip: String = account.getString("zip")
-
-    val charge = new Charges
-    // we have all the strings we need now
-    // send these as arguments to a model though
-    //models.Charge.launch(url, prefix, firstname, lastname, email, address1, city, state, zip)
-    // we need to call teh charge file
-    val endPageTitle = charge.launch(url, prefix, firstname, lastname, email, address1, city, state, zip)
+  def showtime() = Action {
+    request =>
+      
+//    val account = models.User.fetchByEmail(emailInput)
+//    
+//    val url = "https://secure.defenders.org/site/Advocacy?cmd=display&page=UserAction&id=2839"
+//
+//    val prefix: String = account.getString("prefix")    
+//    val firstname: String = account.getString("firstname")
+//    val lastname: String = account.getString("lastname")    
+//    val email: String = account.getString("email")
+//    val address1: String = account.getString("address1")
+//    val city: String = account.getString("city")
+//    val state: String = account.getString("state")
+//    val zip: String = account.getString("zip")
+//
+//    val charge = new Charges
+//    val endPageTitle = charge.launch(url, prefix, firstname, lastname, email, address1, city, state, zip)
+//    
+    
+    request.body.asJson.map { json =>
+      (json \ "email").asOpt[String].map { email =>
+        Ok("Hello " + email)
+      }.getOrElse {
+        BadRequest("Missing parameter [email]")
+      }
+    }.getOrElse {
+      BadRequest("Expecting Json data")
+    }
     
     
-    Ok(endPageTitle)
+    //Ok(endPageTitle)
   
   }
 
