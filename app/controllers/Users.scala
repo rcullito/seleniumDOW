@@ -43,39 +43,35 @@ object Users extends Controller {
       )         
   }
   
-  def showtime() = Action {
+  def showtime() = Action(parse.json) {
     request =>
       
-//    val account = models.User.fetchByEmail(emailInput)
-//    
-//    val url = "https://secure.defenders.org/site/Advocacy?cmd=display&page=UserAction&id=2839"
-//
-//    val prefix: String = account.getString("prefix")    
-//    val firstname: String = account.getString("firstname")
-//    val lastname: String = account.getString("lastname")    
-//    val email: String = account.getString("email")
-//    val address1: String = account.getString("address1")
-//    val city: String = account.getString("city")
-//    val state: String = account.getString("state")
-//    val zip: String = account.getString("zip")
-//
-//    val charge = new Charges
-//    val endPageTitle = charge.launch(url, prefix, firstname, lastname, email, address1, city, state, zip)
-//    
+    val requestEmail = (request.body \ "email").asOpt[String]
+    val emailInput : String = requestEmail.getOrElse("no email")
+    val requestUrl = (request.body \ "url").asOpt[String]
+    val url : String = requestUrl.getOrElse("no url")
+      
+    val account = models.User.fetchByEmail(emailInput)
     
-    request.body.asJson.map { json =>
-      (json \ "email").asOpt[String].map { email =>
-        Ok("Hello " + email)
-      }.getOrElse {
-        BadRequest("Missing parameter [email]")
-      }
-    }.getOrElse {
-      BadRequest("Expecting Json data")
-    }
+   // val url = "https://secure.defenders.org/site/Advocacy?cmd=display&page=UserAction&id=2839"
+
+    val prefix: String = account.getString("prefix")    
+    val firstname: String = account.getString("firstname")
+    val lastname: String = account.getString("lastname")    
+    val email: String = account.getString("email")
+    val address1: String = account.getString("address1")
+    val city: String = account.getString("city")
+    val state: String = account.getString("state")
+    val zip: String = account.getString("zip")
+
+    val charge = new Charges
+    val endPageTitle = charge.launch(url, prefix, firstname, lastname, email, address1, city, state, zip)
     
     
-    //Ok(endPageTitle)
-  
+
+    
+    
+    Ok(endPageTitle)
   }
 
   
