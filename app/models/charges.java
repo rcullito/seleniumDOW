@@ -20,7 +20,7 @@ public class Charges {
   private StringBuffer verificationErrors = new StringBuffer();
   
 
-  public void launch(String url, String prefix, String firstname, String lastname, String email, String address1, String city, String state, String zip) throws Exception {
+  public String launch(String url, String prefix, String firstname, String lastname, String email, String address1, String city, String state, String zip) throws Exception {
 
       // Create a new instance of the Firefox driver
       // Notice that the remainder of the code relies on the interface, 
@@ -47,8 +47,14 @@ public class Charges {
 
       Thread.sleep(5000);
       
+      // check what the page title is if it is thanks we can quit if it is asking for more info then give it more info!
+      
+      String endPageTitle = "Page title is: " + driver.getTitle();
+      
       //Close the browser
       driver.quit();	
+      
+      return endPageTitle;
 
   }
   

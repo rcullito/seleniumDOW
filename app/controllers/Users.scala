@@ -46,6 +46,7 @@ object Users extends Controller {
   def showtime(emailInput: String) = Action {
     val account = models.User.fetchByEmail(emailInput)
 
+//    val url = "https://secure.defenders.org/site/Advocacy?cmd=display&page=UserAction&id=2833"
     val url = "https://secure.defenders.org/site/Advocacy?cmd=display&page=UserAction&id=2839"
 
     val prefix: String = account.getString("prefix")    
@@ -62,10 +63,10 @@ object Users extends Controller {
     // send these as arguments to a model though
     //models.Charge.launch(url, prefix, firstname, lastname, email, address1, city, state, zip)
     // we need to call teh charge file
-    charge.launch(url, prefix, firstname, lastname, email, address1, city, state, zip)
+    val endPageTitle = charge.launch(url, prefix, firstname, lastname, email, address1, city, state, zip)
     
     
-    Ok("clear")
+    Ok(endPageTitle)
   
   }
 
