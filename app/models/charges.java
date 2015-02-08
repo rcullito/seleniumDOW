@@ -1,5 +1,6 @@
 package models;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.*;
@@ -9,8 +10,6 @@ import static org.junit.Assert.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
-
-
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -29,12 +28,7 @@ public class Charges {
       WebDriver driver = new FirefoxDriver();
 
       // And now use this to visit Google
-      driver.get(url);
-      
-      Thread.sleep(2000);
-      // Alternatively the same thing can be done like this
-      // driver.navigate().to("http://www.google.com");
-      
+      driver.get(url);      
       new Select(driver.findElement(By.id("title"))).selectByVisibleText(prefix);
       driver.findElement(By.id("fname")).clear();
       driver.findElement(By.id("fname")).sendKeys(firstname);    
@@ -42,8 +36,6 @@ public class Charges {
       driver.findElement(By.id("lname")).sendKeys(lastname);
       driver.findElement(By.id("street1")).clear();
       driver.findElement(By.id("email")).sendKeys(email);
-      
-      Thread.sleep(2000);
       driver.findElement(By.id("street1")).clear();
       driver.findElement(By.id("street1")).sendKeys(address1);
       driver.findElement(By.id("city")).clear();
@@ -51,10 +43,6 @@ public class Charges {
       new Select(driver.findElement(By.id("state"))).selectByVisibleText(state);    
       driver.findElement(By.id("zip")).clear();
       driver.findElement(By.id("zip")).sendKeys(zip); 
-      // need to find a better way around this option
-      new Select(driver.findElement(By.id("1428_35400_5_42964"))).selectByVisibleText("No");
-      
-      Thread.sleep(2000);
       driver.findElement(By.id("send")).click(); 
 
       Thread.sleep(5000);
