@@ -1,4 +1,8 @@
 TODO
+0. cause the request to fail if email or url are not in the request
+1. cause request to fail if email cannot be found in the database
+
+
 1. how to run selenium with phantomjs(maybe put this as a flag)
 2. kick off on email rather than route being hit
 (really it should be initiated by a post 

@@ -10,6 +10,9 @@ import play.api.data.Forms._
 import models.User
 import models.Charges
 
+import play.api.mvc.Request
+import play.api.libs.json.JsValue
+
 
 object Users extends Controller {
 
@@ -43,35 +46,49 @@ object Users extends Controller {
       )         
   }
   
+  def getRequestValueOrElse(input: Request[JsValue], keyName: String): String = {
+        (input.body \ keyName).asOpt[String].map { newValue =>
+          return newValue
+        }.getOrElse {
+          return "error"
+        }
+  }
+
+  
   def showtime() = Action(parse.json) {
     request =>
-      
-    val requestEmail = (request.body \ "email").asOpt[String]
-    val emailInput : String = requestEmail.getOrElse("no email")
-    val requestUrl = (request.body \ "url").asOpt[String]
-    val url : String = requestUrl.getOrElse("no url")
-      
-    val account = models.User.fetchByEmail(emailInput)
-    
-   // val url = "https://secure.defenders.org/site/Advocacy?cmd=display&page=UserAction&id=2839"
 
-    val prefix: String = account.getString("prefix")    
-    val firstname: String = account.getString("firstname")
-    val lastname: String = account.getString("lastname")    
-    val email: String = account.getString("email")
-    val address1: String = account.getString("address1")
-    val city: String = account.getString("city")
-    val state: String = account.getString("state")
-    val zip: String = account.getString("zip")
-
-    val charge = new Charges
-    val endPageTitle = charge.launch(url, prefix, firstname, lastname, email, address1, city, state, zip)
-    
-    
-
-    
-    
-    Ok(endPageTitle)
+    val emailInput = getRequestValueOrElse(request, "email")
+    if (emailInput == "error") {
+      Ok("invalid email in request")
+    } else {
+      Ok("man")
+    }   
+    // this is an async function apparently!
+//    val url = getRequestValueOrElse(request, "url")
+//    if (url == "error") {
+//      BadRequest("invalid url in request")
+//    }
+//    
+//    val account = models.User.fetchByEmail(emailInput)
+//
+//    val prefix: String = account.getString("prefix")    
+//    val firstname: String = account.getString("firstname")
+//    val lastname: String = account.getString("lastname")    
+//    val email: String = account.getString("email")
+//    val address1: String = account.getString("address1")
+//    val city: String = account.getString("city")
+//    val state: String = account.getString("state")
+//    val zip: String = account.getString("zip")
+//
+//    val charge = new Charges
+//    val endPageTitle = charge.launch(url, prefix, firstname, lastname, email, address1, city, state, zip)
+//    
+//    
+//
+//    
+//    
+//    Ok(endPageTitle)
   }
 
   
