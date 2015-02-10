@@ -51,40 +51,47 @@ object Users extends Controller {
   def getRequestValueOrElse(input: Request[JsValue], keyName: String): Option[String] = {
         return (input.body \ keyName).asOpt[String]
   }
+  
+  
+  def kickOffSelenium(emailInput: String, url: String): String = {
+        val account = models.User.fetchByEmail(emailInput)
+        val prefix: String = account.getString("prefix")    
+        val firstname: String = account.getString("firstname")
+        val lastname: String = account.getString("lastname")    
+        val email: String = account.getString("email")
+        val address1: String = account.getString("address1")
+        val city: String = account.getString("city")
+        val state: String = account.getString("state")
+        val zip: String = account.getString("zip")
+        val charge = new Charges
+        val endPageTitle = charge.launch(url, prefix, firstname, lastname, email, address1, city, state, zip)
+        return endPageTitle
+  }
 
   
   def showtime() = Action(parse.json) {
     request =>
-         
-      
+
+      // for a list of email and url, call the function on each and only proceed if both of the results are defined
    val emailInput: Option[String] = getRequestValueOrElse(request, "email")
     
     emailInput match {
-      case Some(emailInput) => Ok("valid email")
+      case Some(emailInput) => {
+        println("we are here")
+        Ok("valid email")
+      }
       case None => BadRequest("Invalid email")
-    } 
+    }
 
+   
+   
+ // 1. make the rest of the application a function call with emailInput as a string
+   
+    val endPageTitle = kickOffSelenium("rob.culliton@gmail.com", "weekendswap.com")
 
-//    
-//    val account = models.User.fetchByEmail(emailInput)
-//
-//    val prefix: String = account.getString("prefix")    
-//    val firstname: String = account.getString("firstname")
-//    val lastname: String = account.getString("lastname")    
-//    val email: String = account.getString("email")
-//    val address1: String = account.getString("address1")
-//    val city: String = account.getString("city")
-//    val state: String = account.getString("state")
-//    val zip: String = account.getString("zip")
-//
-//    val charge = new Charges
-//    val endPageTitle = charge.launch(url, prefix, firstname, lastname, email, address1, city, state, zip)
-//    
-//    
-//
-//    
-//    
-//    Ok(endPageTitle)
+    
+
+    Ok(endPageTitle)
   }
 
   
