@@ -72,26 +72,17 @@ object Users extends Controller {
   def showtime() = Action(parse.json) {
     request =>
 
-      // for a list of email and url, call the function on each and only proceed if both of the results are defined
+   // TODO for a list of email and url, call the function on each and only proceed if both of the results are defined
+   // make this an awesome for comprehension
    val emailInput: Option[String] = getRequestValueOrElse(request, "email")
     
     emailInput match {
       case Some(emailInput) => {
-        println("we are here")
-        Ok("valid email")
+        val endPageTitle = kickOffSelenium("rob.culliton@gmail.com", "https://secure.defenders.org/site/Advocacy?cmd=display&page=UserAction&id=2843")
+        Ok(endPageTitle)
       }
       case None => BadRequest("Invalid email")
     }
-
-   
-   
- // 1. make the rest of the application a function call with emailInput as a string
-   
-    val endPageTitle = kickOffSelenium("rob.culliton@gmail.com", "weekendswap.com")
-
-    
-
-    Ok(endPageTitle)
   }
 
   
