@@ -55,20 +55,16 @@ object Users extends Controller {
   
   def showtime() = Action(parse.json) {
     request =>
-    val emailInput: Option[String] = getRequestValueOrElse(request, "email")
-    Ok(emailInput.getOrElse("damn"))
+         
+      
+   val emailInput: Option[String] = getRequestValueOrElse(request, "email")
     
-    
-//    if (emailInput == "error") {
-//      Ok("invalid email in request")
-//    } else {
-//      Ok("man")
-//    }   
-    // this is an async function apparently!
-//    val url = getRequestValueOrElse(request, "url")
-//    if (url == "error") {
-//      BadRequest("invalid url in request")
-//    }
+    emailInput match {
+      case Some(emailInput) => Ok("valid email")
+      case None => BadRequest("Invalid email")
+    } 
+
+
 //    
 //    val account = models.User.fetchByEmail(emailInput)
 //
