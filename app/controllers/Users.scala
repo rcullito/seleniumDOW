@@ -13,6 +13,8 @@ import models.Charges
 import play.api.mvc.Request
 import play.api.libs.json.JsValue
 
+import scala.util.{Try, Success, Failure}
+
 
 object Users extends Controller {
 
@@ -46,24 +48,22 @@ object Users extends Controller {
       )         
   }
   
-  def getRequestValueOrElse(input: Request[JsValue], keyName: String): String = {
-        (input.body \ keyName).asOpt[String].map { newValue =>
-          return newValue
-        }.getOrElse {
-          return "error"
-        }
+  def getRequestValueOrElse(input: Request[JsValue], keyName: String): Option[String] = {
+        return (input.body \ keyName).asOpt[String]
   }
 
   
   def showtime() = Action(parse.json) {
     request =>
-
-    val emailInput = getRequestValueOrElse(request, "email")
-    if (emailInput == "error") {
-      Ok("invalid email in request")
-    } else {
-      Ok("man")
-    }   
+    val emailInput: Option[String] = getRequestValueOrElse(request, "email")
+    Ok(emailInput.getOrElse("damn"))
+    
+    
+//    if (emailInput == "error") {
+//      Ok("invalid email in request")
+//    } else {
+//      Ok("man")
+//    }   
     // this is an async function apparently!
 //    val url = getRequestValueOrElse(request, "url")
 //    if (url == "error") {
