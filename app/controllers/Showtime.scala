@@ -21,7 +21,7 @@ object Showtime extends Controller {
   def buildRequestMap(input: Request[JsValue], keyNames: List[String]): Map[String,Option[String]] = {
     var requestInputs:Map[String,Option[String]] = Map()
     keyNames.foreach { keyName => requestInputs += (keyName -> (input.body \ keyName).asOpt[String]) }
-    return requestInputs
+    requestInputs
   }
   
   def getMissingParams(requestLookups: Map[String, Option[String]]): Iterable[String] = {
@@ -32,12 +32,12 @@ object Showtime extends Controller {
   }   
   
   def getValidRequestParams(requestLookups: Map[String, Option[String]]): Array[String] = {
-       val definedRequestValues = for {
-          (key, value) <- requestLookups
-          definedValue <- value
-        } yield (definedValue)
+     val definedRequestValues = for {
+        (key, value) <- requestLookups
+        definedValue <- value
+      } yield (definedValue)
 
-        definedRequestValues.toArray
+      definedRequestValues.toArray
   }
   
   
@@ -52,28 +52,27 @@ object Showtime extends Controller {
         val state: String = account.getString("state")
         val zip: String = account.getString("zip")
         val charge = new Charges
-        val endPageTitle = charge.launch(url, prefix, firstname, lastname, email, address1, city, state, zip)
-        return endPageTitle
+        charge.launch(url, prefix, firstname, lastname, email, address1, city, state, zip)
   }  
 
   def index() = Action(parse.json) {
-    request =>
+     request =>
 
-   val requestBodyParamNames: List[String] = List("email", "url")  
-   val requestLookups = buildRequestMap(request, requestBodyParamNames)
-   val missingParams = getMissingParams(requestLookups)  
-
-    missingParams match {
-     
-      case List() => 
-        val validRequestParams = getValidRequestParams(requestLookups)
-        val endPageTitle = kickOffSelenium(validRequestParams(0), validRequestParams(1))
-        Ok(endPageTitle)
-        
-      case _ =>
-        // TODO display this more prettily
-        BadRequest("missing parameters" + missingParams.toString)
-    }
+     val requestBodyParamNames: List[String] = List("email", "url")  
+     val requestLookups = buildRequestMap(request, requestBodyParamNames)
+     val missingParams = getMissingParams(requestLookups)  
+  
+      missingParams match {
+       
+        case List() => 
+          val validRequestParams = getValidRequestParams(requestLookups)
+          val endPageTitle = kickOffSelenium(validRequestParams(0), validRequestParams(1))
+          Ok(endPageTitle)
+          
+        case _ =>
+          // TODO display this more prettily
+          BadRequest("missing parameters: " + missingParams.mkString(", "))
+      }
   }
   
 
