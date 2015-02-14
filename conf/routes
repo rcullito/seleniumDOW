@@ -3,15 +3,11 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
-
-GET 	/welcome					controllers.Users.index
+GET     /                           controllers.Users.index				
 POST 	/users						controllers.Users.submitForm
+GET 	/thanks						controllers.Users.thanks
 
-GET 	/emails						controllers.Users.fetchEmails
-GET		/user/:email				controllers.Users.fetchByEmail(email: String)
-
-POST     /showtime     			    controllers.Users.showtime
+POST     /showtime     			    controllers.Showtime.index
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
