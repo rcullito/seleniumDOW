@@ -76,30 +76,19 @@ object Users extends Controller {
 
    // only proceed if each of these is a some
    val requestBodyParams: List[Option[String]] = requestBodyParamNames.map(getRequestValue(request, _))
-   
-    val evens: List[Int] = for (i <- List.range(0, 10) if i % 2 == 0) yield i
     
     val validRequestBodyParams = for (i <- requestBodyParams if i.isDefined) yield  {
      i match {
        case Some(i) => i
      } 
     }
-
-   println(requestBodyParams)
-   println(validRequestBodyParams)
    
-   // if the list of validRequestBodyParams is the same length as the list of requestBodyParamNames we are good to go, otherwise throw an error
-      
-   val emailInput: Option[String] = getRequestValue(request, "email")
-    
-    emailInput match {
-      case Some(emailInput) => {
-        println(emailInput)
-        val endPageTitle = kickOffSelenium(emailInput, "https://secure.defenders.org/site/Advocacy?cmd=display&page=UserAction&id=2843")
+   if (requestBodyParamNames.length == validRequestBodyParams.length) {
+        val endPageTitle = kickOffSelenium(validRequestBodyParams(0), validRequestBodyParams(1))
         Ok(endPageTitle)
-      }
-      case None => BadRequest("Invalid email")
-    }
+   } else {
+     BadRequest("Invalid request")
+   }
   }
 
   
