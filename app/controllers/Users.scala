@@ -46,7 +46,20 @@ object Users extends Controller {
           Redirect(routes.Application.index())
         }
       )         
-  }  
+  }
+  
+  def getRequestValues(input: Request[JsValue], keyNames: List[String]): Map[String,Option[String]] = {
+    var requestInputs:Map[String,Option[String]] = Map()
+    keyNames.foreach { keyName => requestInputs += (keyName -> (input.body \ keyName).asOpt[String]) }
+    return requestInputs
+  }
+  
+  def getMissingParams(requestLookups: Map[String, Option[String]]): Iterable[String] = {
+    for {
+      (key, value) <- requestLookups
+      if !value.isDefined
+    } yield (key)  
+  }   
   
   def kickOffSelenium(emailInput: String, url: String): String = {
         val account = models.User.fetchByEmail(emailInput)
@@ -63,11 +76,15 @@ object Users extends Controller {
         return endPageTitle
   }
   
-  def getRequestValues(input: Request[JsValue], keyNames: List[String]): Map[String,Option[String]] = {
-    var requestInputs:Map[String,Option[String]] = Map()
-    keyNames.foreach { keyName => requestInputs += (keyName -> (input.body \ keyName).asOpt[String]) }
-    return requestInputs
-  }  
+  def getArrayVals(requestLookups: Map[String, Option[String]]): Array[String] = {
+       val definedRequestValues = for {
+          (key, value) <- requestLookups
+          definedValue <- value
+        } yield (definedValue)
+
+        definedRequestValues.toArray
+  }
+
 
   
   def showtime() = Action(parse.json) {
@@ -76,30 +93,19 @@ object Users extends Controller {
 
    val requestBodyParamNames: List[String] = List("email", "url")  
    val requestLookups = getRequestValues(request, requestBodyParamNames)
-
-
-    val missingParams = for {
-      (key, value) <- requestLookups
-      if !value.isDefined
-    } yield (key)  
+   val missingParams = getMissingParams(requestLookups)  
     
     println(missingParams)
 
     missingParams match {
+     
       case List() => 
-        
-        // TODO get or else
-        val requestEmail= requestLookups.get("email")
-        
-        val definedRequestValues = for {
-          (key, value) <- requestLookups
-          definedValue <- value
-        } yield (definedValue)
-
-        val arrayVals = definedRequestValues.toArray
+        val arrayVals = getArrayVals(requestLookups)
         val endPageTitle = kickOffSelenium(arrayVals(0), arrayVals(1))
         Ok(endPageTitle)
+        
       case _ =>
+        // TODO display this more prettily
         BadRequest("missing parameters" + missingParams.toString)
     }
   }
