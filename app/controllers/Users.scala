@@ -63,8 +63,10 @@ object Users extends Controller {
         return endPageTitle
   }
   
-  def getRequestValue(input: Request[JsValue], keyName: String): Option[String] = {
-        return (input.body \ keyName).asOpt[String]
+  def getRequestValues(input: Request[JsValue], keyNames: List[String]): Map[String,Option[String]] = {
+    var requestInputs:Map[String,Option[String]] = Map()
+    keyNames.foreach { keyName => requestInputs += (keyName -> (input.body \ keyName).asOpt[String]) }
+    return requestInputs
   }  
 
   
@@ -72,23 +74,34 @@ object Users extends Controller {
     request =>
 
 
-   val requestBodyParamNames: List[String] = List("email", "url")   
+   val requestBodyParamNames: List[String] = List("email", "url")  
+   val requestLookups = getRequestValues(request, requestBodyParamNames)
 
-   // only proceed if each of these is a some
-   val requestBodyParams: List[Option[String]] = requestBodyParamNames.map(getRequestValue(request, _))
+
+    val missingParam = for {
+      (key, value) <- requestLookups
+      if !value.isDefined
+    } yield (key)
     
-    val validRequestBodyParams = for (i <- requestBodyParams if i.isDefined) yield  {
-     i match {
-       case Some(i) => i
-     } 
-    }
+    println(missingParam)
+
+    Ok("wheee")
    
-   if (requestBodyParamNames.length == validRequestBodyParams.length) {
-        val endPageTitle = kickOffSelenium(validRequestBodyParams(0), validRequestBodyParams(1))
-        Ok(endPageTitle)
-   } else {
-     BadRequest("Invalid request")
-   }
+   
+//   val requestBodyParams: List[Option[String]] = requestBodyParamNames.map(getRequestValues(request, _))
+//    
+//    val validRequestBodyParams = for (i <- requestBodyParams if i.isDefined) yield  {
+//     i match {
+//       case Some(i) => i
+//     } 
+//    }
+//   
+//   if (requestBodyParamNames.length == validRequestBodyParams.length) {
+//        val endPageTitle = kickOffSelenium(validRequestBodyParams(0), validRequestBodyParams(1))
+//        Ok(endPageTitle)
+//   } else {
+//     BadRequest("Invalid request")
+//   }
   }
 
   
