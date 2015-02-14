@@ -46,12 +46,7 @@ object Users extends Controller {
           Redirect(routes.Application.index())
         }
       )         
-  }
-  
-  def getRequestValueOrElse(input: Request[JsValue], keyName: String): Option[String] = {
-        return (input.body \ keyName).asOpt[String]
-  }
-  
+  }  
   
   def kickOffSelenium(emailInput: String, url: String): String = {
         val account = models.User.fetchByEmail(emailInput)
@@ -67,6 +62,10 @@ object Users extends Controller {
         val endPageTitle = charge.launch(url, prefix, firstname, lastname, email, address1, city, state, zip)
         return endPageTitle
   }
+  
+  def getRequestValueOrElse(input: Request[JsValue], keyName: String): Option[String] = {
+        return (input.body \ keyName).asOpt[String]
+  }  
 
   
   def showtime() = Action(parse.json) {
@@ -74,11 +73,18 @@ object Users extends Controller {
 
    // TODO for a list of email and url, call the function on each and only proceed if both of the results are defined
    // make this an awesome for comprehension
+   val requestBodyParamNames: List[String] = List("email", "url")   
+
+   val requestBodyParams:  List[Option[String]] = requestBodyParamNames.map(getRequestValueOrElse(request, _))
+   
+   println(requestBodyParams)
+      
    val emailInput: Option[String] = getRequestValueOrElse(request, "email")
     
     emailInput match {
       case Some(emailInput) => {
-        val endPageTitle = kickOffSelenium("rob.culliton@gmail.com", "https://secure.defenders.org/site/Advocacy?cmd=display&page=UserAction&id=2843")
+        println(emailInput)
+        val endPageTitle = kickOffSelenium(emailInput, "https://secure.defenders.org/site/Advocacy?cmd=display&page=UserAction&id=2843")
         Ok(endPageTitle)
       }
       case None => BadRequest("Invalid email")
