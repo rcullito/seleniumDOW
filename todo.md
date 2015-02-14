@@ -1,6 +1,6 @@
 TODO
-1. cause request to fail if email cannot be found in the database
-2. fail if cassandra is not up and running
+
+1. fail if cassandra is not up and running for both post and loading initial page state
 
 
 1. how to run selenium with phantomjs(maybe put this as a flag)

@@ -63,18 +63,23 @@ object Showtime extends Controller {
      request =>
 
      val requestBodyParamNames: List[String] = List("email", "url")  
-     val requestLookups = buildRequestMap(request, requestBodyParamNames)
+     val requestLookups: Map[String, Option[String]] = buildRequestMap(request, requestBodyParamNames)
      val missingParams = getMissingParams(requestLookups)  
   
       missingParams match {
        
+        // if there are no missing parameters then query for user
         case List() => 
           val validRequestParams = getValidRequestParams(requestLookups)
-          val endPageTitle = kickOffSelenium(validRequestParams(0), validRequestParams(1))
-          Ok(endPageTitle)
+          val endPageTitle: Try[String] = Try(kickOffSelenium(validRequestParams(0), validRequestParams(1)))
           
+          // if there was an exception retrieving the user then return an error message with a 400
+          endPageTitle match {
+            case Success(endPageTitle) => Ok(endPageTitle)
+            case Failure(ex) => BadRequest(ex.getMessage)            
+          }
+
         case _ =>
-          // TODO display this more prettily
           BadRequest("missing parameters: " + missingParams.mkString(", "))
       }
   }
