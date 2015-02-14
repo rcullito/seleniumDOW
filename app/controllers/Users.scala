@@ -78,12 +78,17 @@ object Users extends Controller {
    val requestLookups = getRequestValues(request, requestBodyParamNames)
 
 
-    val missingParam = for {
+    val missingParams = for {
       (key, value) <- requestLookups
       if !value.isDefined
-    } yield (key)
-    
-    println(missingParam)
+    } yield (key)    
+
+    missingParams match {
+      case List() => 
+        kickOffSelenium(requestLookups.get("email"), requestLookups.get("url"))
+      case _ =>
+        BadRequest("missing parameters" + missingParams.toString)
+    }
 
     Ok("wheee")
    
@@ -93,8 +98,7 @@ object Users extends Controller {
 //    val validRequestBodyParams = for (i <- requestBodyParams if i.isDefined) yield  {
 //     i match {
 //       case Some(i) => i
-//     } 
-//    }
+//     } //    }
 //   
 //   if (requestBodyParamNames.length == validRequestBodyParams.length) {
 //        val endPageTitle = kickOffSelenium(validRequestBodyParams(0), validRequestBodyParams(1))
