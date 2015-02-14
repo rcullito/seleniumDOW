@@ -1,10 +1,4 @@
 TODO
-
-
-0. cause the request to fail if email or url are not in the request
-	- it should tell you which one you are missing, or both
-
-
 1. cause request to fail if email cannot be found in the database
 2. fail if cassandra is not up and running
 

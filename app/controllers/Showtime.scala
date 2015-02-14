@@ -18,6 +18,8 @@ import scala.util.{Try, Success, Failure}
 
 object Showtime extends Controller {
   
+  case class UserNotFoundException(message: String) extends Exception(message)
+  
   def buildRequestMap(input: Request[JsValue], keyNames: List[String]): Map[String,Option[String]] = {
     var requestInputs:Map[String,Option[String]] = Map()
     keyNames.foreach { keyName => requestInputs += (keyName -> (input.body \ keyName).asOpt[String]) }
@@ -40,9 +42,11 @@ object Showtime extends Controller {
       definedRequestValues.toArray
   }
   
-  
   def kickOffSelenium(emailInput: String, url: String): String = {
         val account = models.User.fetchByEmail(emailInput)
+        if (account == null) {
+          throw UserNotFoundException("User not found!")
+        }
         val prefix: String = account.getString("prefix")    
         val firstname: String = account.getString("firstname")
         val lastname: String = account.getString("lastname")    
