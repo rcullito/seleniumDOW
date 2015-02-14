@@ -63,7 +63,7 @@ object Users extends Controller {
         return endPageTitle
   }
   
-  def getRequestValueOrElse(input: Request[JsValue], keyName: String): Option[String] = {
+  def getRequestValue(input: Request[JsValue], keyName: String): Option[String] = {
         return (input.body \ keyName).asOpt[String]
   }  
 
@@ -71,15 +71,26 @@ object Users extends Controller {
   def showtime() = Action(parse.json) {
     request =>
 
-   // TODO for a list of email and url, call the function on each and only proceed if both of the results are defined
-   // make this an awesome for comprehension
+
    val requestBodyParamNames: List[String] = List("email", "url")   
 
-   val requestBodyParams:  List[Option[String]] = requestBodyParamNames.map(getRequestValueOrElse(request, _))
+   // only proceed if each of these is a some
+   val requestBodyParams: List[Option[String]] = requestBodyParamNames.map(getRequestValue(request, _))
    
+    val evens: List[Int] = for (i <- List.range(0, 10) if i % 2 == 0) yield i
+    
+    val validRequestBodyParams = for (i <- requestBodyParams if i.isDefined) yield  {
+     i match {
+       case Some(i) => i
+     } 
+    }
+
    println(requestBodyParams)
+   println(validRequestBodyParams)
+   
+   // if the list of validRequestBodyParams is the same length as the list of requestBodyParamNames we are good to go, otherwise throw an error
       
-   val emailInput: Option[String] = getRequestValueOrElse(request, "email")
+   val emailInput: Option[String] = getRequestValue(request, "email")
     
     emailInput match {
       case Some(emailInput) => {
