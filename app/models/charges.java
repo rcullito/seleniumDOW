@@ -9,6 +9,9 @@ import static org.junit.Assert.*;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -25,7 +28,18 @@ public class Charges {
       // Create a new instance of the Firefox driver
       // Notice that the remainder of the code relies on the interface, 
       // not the implementation.
-      WebDriver driver = new FirefoxDriver();
+	  
+	  DesiredCapabilities caps = new DesiredCapabilities();
+	    caps.setJavascriptEnabled(true);
+	    caps.setCapability("takesScreenshot", true);
+	    caps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY,"/usr/local/bin/phantomjs");
+	    WebDriver driver = new PhantomJSDriver(caps);
+//	     driver.get("www.google.com");
+//	  
+//	  DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
+//	  System.setProperty("phantomjs.binary.path","/usr/local/bin/phantomjs");
+//	  PhantomJSDriver driver = new PhantomJSDriver(capabilities);
+      //WebDriver driver = new FirefoxDriver();
 
       // And now use this to visit Google
       driver.get(url);      
