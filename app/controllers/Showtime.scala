@@ -47,6 +47,8 @@ object Showtime extends Controller {
         if (account == null) {
           throw UserNotFoundException("User not found!")
         }
+        
+        val ghostProtocol = true
         val prefix: String = account.getString("prefix")    
         val firstname: String = account.getString("firstname")
         val lastname: String = account.getString("lastname")    
@@ -56,7 +58,7 @@ object Showtime extends Controller {
         val state: String = account.getString("state")
         val zip: String = account.getString("zip")
         val charge = new Charges
-        charge.launch(url, prefix, firstname, lastname, email, address1, city, state, zip)
+        charge.launch(ghostProtocol, url, prefix, firstname, lastname, email, address1, city, state, zip)
   }  
 
   def index() = Action(parse.json) {
