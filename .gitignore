@@ -17,3 +17,4 @@ dist
 bin/
 .metadata/
 RemoteSystemsTempFiles/
+phantomjsdriver.log
