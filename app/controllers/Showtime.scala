@@ -27,7 +27,6 @@ object Showtime extends Controller {
         if (account == null) {
           throw UserNotFoundException("User not found!")
         }
-        
         val prefix: String = account.getString("prefix")    
         val firstname: String = account.getString("firstname")
         val lastname: String = account.getString("lastname")    
@@ -40,12 +39,16 @@ object Showtime extends Controller {
         charge.launch(ghostProtocol, url, prefix, firstname, lastname, email, address1, city, state, zip)
   }  
   
+  
+  def parseInputAndLaunch(request: Request[JsValue]): String = {
+      val incomingRequest = ExpectedRequest((request.body \ "email").as[String], (request.body \ "url").as[String], (request.body \ "ghostProtocol").as[Boolean])
+      kickOffSelenium(incomingRequest.email, incomingRequest.url, incomingRequest.ghostProtocol)
+  }
+  
   def index() = Action(parse.json) {
      request =>
 
-     val requestBodyParamNames: List[String] = List("email", "url", "ghostProtocol")  
-     val incomingRequest = ExpectedRequest((request.body \ "email").as[String], (request.body \ "url").as[String], (request.body \ "ghostProtocol").as[Boolean])
-     val endPageTitle: Try[String] = Try(kickOffSelenium(incomingRequest.email, incomingRequest.url, incomingRequest.ghostProtocol))
+     val endPageTitle: Try[String] = Try(parseInputAndLaunch(request))
     
     // if there was an exception retrieving the user then return an error message with a 400
     endPageTitle match {
