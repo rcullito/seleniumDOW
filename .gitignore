@@ -18,3 +18,4 @@ bin/
 .metadata/
 RemoteSystemsTempFiles/
 phantomjsdriver.log
+.tmpBin/
