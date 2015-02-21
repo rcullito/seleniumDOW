@@ -16,22 +16,37 @@ import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
 object Postmark extends Controller {
-  
-  case class Location(lat: String, long: String)
-  
+    
   val json: JsValue = Json.parse("""
     {
-        "lat" : "51.235685",
-        "long" : "-1.309197"
+      "FromName": "Robert Culliton",
+      "From": "rob.culliton@gmail.com",
+      "FromFull": {
+        "Email": "rob.culliton@gmail.com",
+        "Name": "Robert Culliton",
+        "MailboxHash": "#47584229"
+      }
     }
    """)
+   
+  // when nesting case classes have the argument name start with a lower case whereas the case class begins with an upper case
+  case class FromFull(email: String, name: String, mailboxHash: String)
+  case class postMarkMitt(fromName: String, from: String, fromFull: FromFull) 
+   
+  implicit val fromFullReads: Reads[FromFull] = (
+     (JsPath \ "Email").read[String] and
+     (JsPath \ "Name").read[String] and
+     (JsPath \ "MailboxHash").read[String]  
+  )(FromFull.apply _)
+
   
-  implicit val locationReads: Reads[Location] = (
-      (JsPath \ "lat").read[String] and
-      (JsPath \ "long").read[String]
-    )(Location.apply _)
+  implicit val postMarkReads: Reads[postMarkMitt] = (
+      (JsPath \ "FromName").read[String] and
+      (JsPath \ "From").read[String] and
+      (JsPath \ "FromFull").read[FromFull]
+    )(postMarkMitt.apply _)
     
-  val locationResult: JsResult[Location] = json.validate[Location]
+  val locationResult: JsResult[postMarkMitt] = json.validate[postMarkMitt]
     
     
   
@@ -39,8 +54,8 @@ object Postmark extends Controller {
      request =>
 
      locationResult match {
-        case s: JsSuccess[Location] => val result = s.get
-          Ok(result.lat)
+        case s: JsSuccess[postMarkMitt] => val result = s.get
+          Ok(result.fromFull.mailboxHash)
         //case e: JsError => println("Errors: " + JsError.toFlatJson(e).toString()) 
       }
     
