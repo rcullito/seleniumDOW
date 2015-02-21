@@ -9,5 +9,7 @@ GET 	/thanks						controllers.Users.thanks
 
 POST     /showtime     			    controllers.Showtime.index
 
+GET /testsample				controllers.Postmark.sample
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
