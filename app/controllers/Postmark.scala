@@ -155,13 +155,26 @@ object Postmark extends Controller {
             "Name": "X-Orchestra-Account",
             "Value": "84690248f75635f69b867bd03083b094cc6b2769"
           }
+        ],
+        "Attachments": [
+          {
+            "Name": "2.21.15Notes.rtf",
+            "Content": "e1xydGYxXGFuc2lcYW5zaWNwZzEyNTJcY29jb2FydGYxMzQzXGNvY29hc3VicnRmMTQwCntcZm9udHRibFxmMFxmc3dpc3NcZmNoYXJzZXQwIEhlbHZldGljYTtcZjFcZm1vZGVyblxmY2hhcnNldDAgQ291cmllcjtcZjJcZnJvbWFuXGZjaGFyc2V0MCBUaW1lcy1Sb21hbjsKXGYzXGZuaWxcZmNoYXJzZXQwIEhlbHZldGljYU5ldWU7fQp7XGNvbG9ydGJsO1xyZWQyNTVcZ3JlZW4yNTVcYmx1ZTI1NTtccmVkODJcZ3JlZW4wXGJsdWU4MztccmVkMjQ1XGdyZWVuMjQ1XGJsdWUyNDU7XHJlZDgzXGdyZWVuODVcYmx1ZTI7ClxyZWQzOFxncmVlbjM4XGJsdWUzODtccmVkODNcZ3JlZW44M1xibHVlODM7XHJlZDI0OVxncmVlbjI0OVxibHVlMjQ5O1xyZWQyNTVcZ3JlZW4yNTVcYmx1ZTI1NTt9ClxtYXJnbDE0NDBcbWFyZ3IxNDQwXHZpZXd3MTA4MDBcdmlld2g4NDAwXHZpZXdraW5kMApccGFyZFx0eDcyMFx0eDE0NDBcdHgyMTYwXHR4Mjg4MFx0eDM2MDBcdHg0MzIwXHR4NTA0MFx0eDU3NjBcdHg2NDgwXHR4NzIwMFx0eDc5MjBcdHg4NjQwXHBhcmRpcm5hdHVyYWwKClxmMFxmczI0IFxjZjAgMS4gcGFyc2Ugc29uIHN0cmluZyB3aXRoIHBsYXlcJzkycyBidWlsdCBpbiBqc29uIGxpYnJhcnksIHdoaWNoIHJldHVybnMgYSBqc1ZhbHVlXAoyLiB0cmF2ZXJzZSB0aGUgSnNWYWx1ZSB3aXRoIHRoZSBcJzkzXFxcJzk0IHN5bnRheC5cCjMuIGNvbnZlcnQganN2YWx1ZSB3aXRoIEpzVmFsdWUuYXNbVF1cClwKVGhlIGFzIG1ldGhvZCB3aWxsIHRocm93IGEgSnNSZXN1bHRFeGNlcHRpb24gaWYgdGhlIHBhdGggaXMgbm90IGZvdW5kIG9yIHRoZSBjb252ZXJzaW9uIGlzIG5vdCBwb3NzaWJsZS5cClwKeW91IGNhbiB2YWxpZGF0ZSBhIGpzdmFsdWUgd2hpY2ggc2VlbXMga2luZCBvZiB0ZWRpb3VzIG9yIHlvdSBjYW4gY29udmVydCBpdCB0byBhIG1vZGVsXApcCnJldHVybnMgYSAKXGYxXGZzMjggXGNmMiBcY2IzIFxleHBuZDBcZXhwbmR0dzBca2VybmluZzAKXG91dGwwXHN0cm9rZXdpZHRoMCBcc3Ryb2tlYzIgSnNSZXN1bHRcY2Y0IFxleHBuZDBcZXhwbmR0dzBca2VybmluZzAKXG91dGwwXHN0cm9rZXdpZHRoMCBcc3Ryb2tlYzQgW1xjZjIgXGV4cG5kMFxleHBuZHR3MFxrZXJuaW5nMApcb3V0bDBcc3Ryb2tld2lkdGgwIFxzdHJva2VjMiBQbGFjZVxjZjQgXGV4cG5kMFxleHBuZHR3MFxrZXJuaW5nMApcb3V0bDBcc3Ryb2tld2lkdGgwIFxzdHJva2VjNCBdClxmMlxmczMwIFxjZjUgXGV4cG5kMFxleHBuZHR3MFxrZXJuaW5nMApcb3V0bDBcc3Ryb2tld2lkdGgwIFxzdHJva2VjNSBcClxwYXJkXHBhcmRlZnRhYjcyMFxzbDM5MAoKXGYxIFxjZjYgXGNiNyBcZXhwbmQwXGV4cG5kdHcwXGtlcm5pbmcwClxvdXRsMFxzdHJva2V3aWR0aDAgXHN0cm9rZWM2IEpzUmVzdWx0W1RdClxmMyBcY2Y1IFxjYjggXGV4cG5kMFxleHBuZHR3MFxrZXJuaW5nMApcb3V0bDBcc3Ryb2tld2lkdGgwIFxzdHJva2VjNSAgY2FuIGhhdmUgMiB2YWx1ZXM6fQ==",
+            "ContentType": "application/rtf",
+            "ContentID": "",
+            "ContentLength": 1492
+          }
         ]         
     }
    """)
    
   // when nesting case classes have the argument name start with a lower case whereas the case class begins with an upper case
   case class full(email: String, name: String, mailboxHash: String)
+  
   case class header(name: String, value: String)
+  
+  case class attachment(name: String, content: String, contentType: String, contentID: String, contentLength: Long)
+  
   case class postMarkMitt(
       fromName: String, 
       from: String, 
@@ -183,8 +196,8 @@ object Postmark extends Controller {
       htmlBody: String,
       strippedTextReply: String,
       tag: String,
-      headers: Seq[header]
-      // TODO headers array and attachments
+      headers: Seq[header],
+      attachments: Seq[attachment]
   ) 
    
   implicit val fullReads: Reads[full] = (
@@ -198,7 +211,14 @@ object Postmark extends Controller {
    (JsPath \ "Name").read[String] and
    (JsPath \ "Value").read[String]  
   )(header.apply _)
-
+  
+  implicit val attachmentReads: Reads[attachment] = (
+   (JsPath \ "Name").read[String] and
+   (JsPath \ "Content").read[String] and
+   (JsPath \ "ContentType").read[String] and
+   (JsPath \ "ContentID").read[String] and
+   (JsPath \ "ContentLength").read[Long]
+  )(attachment.apply _)
   
   implicit val postMarkReads: Reads[postMarkMitt] = (
       (JsPath \ "FromName").read[String] and
@@ -220,7 +240,8 @@ object Postmark extends Controller {
       (JsPath \ "HtmlBody").read[String] and
       (JsPath \ "StrippedTextReply").read[String] and
       (JsPath \ "Tag").read[String] and
-      (JsPath \ "Headers").read[Seq[header]]
+      (JsPath \ "Headers").read[Seq[header]] and
+      (JsPath \ "Attachments").read[Seq[attachment]]
     )(postMarkMitt.apply _)
     
   val postMarkResult: JsResult[postMarkMitt] = json.validate[postMarkMitt]
@@ -230,7 +251,7 @@ object Postmark extends Controller {
 
      postMarkResult match {
         case s: JsSuccess[postMarkMitt] => val result = s.get
-          Ok(result.headers.length.toString())
+          Ok(result.attachments.length.toString())
         //case e: JsError => println("Errors: " + JsError.toFlatJson(e).toString()) 
       }
     
