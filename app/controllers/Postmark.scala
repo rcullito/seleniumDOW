@@ -16,7 +16,7 @@ object Postmark extends Controller {
   val json = Json.parse(source.mkString)
   source.close()
    
-  // when nesting case classes have the argument name start with a lower case whereas the case class begins with an upper case
+  // start of jar
   case class full(email: String, name: String, mailboxHash: String)
   
   case class header(name: String, value: String)
@@ -93,6 +93,8 @@ object Postmark extends Controller {
     )(postMarkMitt.apply _)
     
   val postMarkResult: JsResult[postMarkMitt] = json.validate[postMarkMitt]
+  
+  // end of jar
 
   def sample() = Action {
      request =>
