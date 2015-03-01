@@ -17,5 +17,5 @@ libraryDependencies ++= Seq(
   "org.seleniumhq.selenium" % "selenium-java" % "2.44.0",
   "com.datastax.cassandra" % "cassandra-driver-core" % "2.1.1",
   "com.datastax.cassandra" % "cassandra-driver-mapping" % "2.1.1",
-  libraryDependencies += "io.wampum" %% "postmarkMitt" % "0.1-SNAPSHOT"
+  "io.wampum" %% "postmarkMitt" % "0.1-SNAPSHOT"
 )
